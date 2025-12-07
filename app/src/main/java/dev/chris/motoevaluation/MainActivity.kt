@@ -49,7 +49,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // Note: In a real app, you'd handle service.close() in a scoped component/onDestroy
 }
 
 

@@ -37,9 +37,9 @@ class KtorRealTimeService {
             try {
                 println("🔌 Connecting to WebSocket...")
 
-                // 10.0.2.2 is the Emulator's alias for localhost
+                // TODO: CHANGE THIS HOST IP to your wifi IP if running on a physical device, so your phone and the server  should be connected to same wifi.
                 client.webSocket(host = "192.168.0.185", port = 8080, path = "/") {
-                    println("✅ Connected!")
+                    println(" Connected!")
 
                     for (frame in incoming) {
                         if (frame is Frame.Text) {
@@ -54,7 +54,7 @@ class KtorRealTimeService {
                     }
                 }
             } catch (e: Exception) {
-                println("❌ Connection Error: ${e.message}")
+                println("Connection Error: ${e.message}")
                 // Retry Logic (Requirement 1)
                 delay(3000)
             }
