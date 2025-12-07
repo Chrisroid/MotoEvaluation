@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Moto Server Test</h2>
+    <div id="output" style="font-family: monospace; white-space: pre;"></div>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:8080");
+        const output = document.getElementById("output");
+
+        ws.onopen = () => log("✅ Connected to Moto Server");
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            log(`📩 [${data.type}] ${data.driverId}: ${data.amount}`);
+        };
+        ws.onerror = (e) => log("❌ Error");
+
+        function log(msg) {
+            output.innerHTML += msg + "\n";
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>
