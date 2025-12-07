@@ -1,6 +1,5 @@
 package dev.chris.motoevaluation.data.remote
 
-import android.util.Log
 import dev.chris.motoevaluation.data.dto.SocketEventDto
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -36,11 +35,11 @@ class KtorRealTimeService {
     fun observeEvents(): Flow<SocketEventDto> = flow {
         while (coroutineContext.isActive) {
             try {
-                Log.d("MotoSocket", "🔌 Connecting to WebSocket...")
+                println("🔌 Connecting to WebSocket...")
 
                 // 10.0.2.2 is the Emulator's alias for localhost
                 client.webSocket(host = "192.168.0.185", port = 8080, path = "/") {
-                    Log.d("MotoSocket", "✅ Connected!")
+                    println("✅ Connected!")
 
                     for (frame in incoming) {
                         if (frame is Frame.Text) {
@@ -49,13 +48,13 @@ class KtorRealTimeService {
                                 val dto = jsonParser.decodeFromString<SocketEventDto>(text)
                                 emit(dto)
                             } catch (e: Exception) {
-                                Log.e("MotoSocket", "Parse Error: ${e.message}")
+                                println("Parse Error: ${e.message}")
                             }
                         }
                     }
                 }
             } catch (e: Exception) {
-                Log.e("MotoSocket", "❌ Connection Error: ${e.message}")
+                println("❌ Connection Error: ${e.message}")
                 // Retry Logic (Requirement 1)
                 delay(3000)
             }
